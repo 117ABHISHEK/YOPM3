@@ -1,0 +1,49 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Logs
+logs
+*.log
+*.log.*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Build output
+dist/
+build/
+tmp/
+temp/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# SQLite databases
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+
+# Python (if using Flask or AI modules)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+
+# Misc
+*.bak
+*.swp
