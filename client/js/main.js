@@ -1,4 +1,4 @@
-// Make navbar solid after scroll
+// Navbar: make solid after scroll
 (function(){
   const nav = document.getElementById('siteNav');
   const solidClass = 'nav-solid';
@@ -11,7 +11,7 @@
   document.addEventListener('scroll', onScroll, { passive: true });
 })();
 
-// Reveal elements on intersection
+// Reveal on intersection (fade-up)
 (function(){
   const els = document.querySelectorAll('.fade-up');
   if (!('IntersectionObserver' in window)) {
@@ -28,4 +28,3 @@
   }, { threshold: .12 });
   els.forEach(el => io.observe(el));
 })();
-
