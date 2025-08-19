@@ -1,14 +1,70 @@
-/* Palette */
-:root{
-  --navy:#0a1a2f;          /* luxury navy */
-  --gold:#d4af37;          /* accent gold */
-  --ivory:#f8f5f0;         /* soft ivory */
-  --ink:#1a1a1a;
-  --ink-60:rgba(26,26,26,.6);
-  --soft:#f1f1f3;          /* subtle section bg */
+/* ===============================
+   Luxury E-Commerce — Cael & Selene
+   =============================== */
+
+/* ===== Navbar Enhancements ===== */
+.navbar .nav-link {
+  position: relative;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  padding: 0.75rem 1rem;
+  transition: color 0.3s ease;
 }
 
-/* Typography */
+.navbar .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  width: 0;
+  height: 2px;
+  background: var(--gold);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+  opacity: 0;
+}
+
+.navbar .nav-link:hover::after,
+.navbar .nav-link.active::after {
+  width: 60%;
+  opacity: 1;
+}
+
+/* Transparent → Solid navbar */
+.nav-transparent {
+  background: transparent !important;
+  transition: background 0.5s ease, box-shadow 0.5s ease;
+}
+.nav-solid {
+  background: rgba(10, 15, 24, 0.95) !important;
+  box-shadow: 0 6px 20px rgba(0,0,0,.22);
+  backdrop-filter: blur(6px);
+}
+
+/* Brand logo refinement */
+.brand {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--ivory) !important;
+  font-family:"Playfair Display", Georgia, serif;
+  transition: color 0.3s ease;
+}
+.nav-solid .brand {
+  color: var(--gold) !important;
+}
+
+/* ===== Palette ===== */
+:root{
+  --navy:#0a1a2f;          
+  --gold:#d4af37;          
+  --ivory:#f8f5f0;         
+  --ink:#1a1a1a;
+  --ink-60:rgba(26,26,26,.6);
+  --soft:#f1f1f3;          
+}
+
+/* ===== Typography ===== */
 html,body{height:100%}
 body{
   font-family: 'Lato', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
@@ -20,18 +76,7 @@ body{
 .serif{ font-family:"Playfair Display", Georgia, serif; }
 .text-light-80{ color:rgba(255,255,255,.88) }
 
-/* Navbar */
-.brand{
-  font-family:"Playfair Display", Georgia, serif;
-  font-weight:700; letter-spacing:.02em;
-}
-.nav-transparent{ background:transparent !important; transition:background .3s ease, box-shadow .3s ease; }
-.nav-solid{ background:#0b0f18 !important; box-shadow:0 6px 24px rgba(0,0,0,.18); }
-.navbar .nav-link{ color:#fff; opacity:.9; transition:opacity .2s ease; }
-.navbar.nav-solid .nav-link{ color:#e9e9e9; opacity:.9; }
-.navbar .nav-link:hover{ opacity:1; color:var(--gold) !important }
-
-/* CTA */
+/* ===== CTA Buttons ===== */
 .btn-cta{
   background:var(--gold);
   color:#0b0f18;
@@ -39,60 +84,130 @@ body{
   border:1px solid #b9932a;
   transition:transform .15s ease, box-shadow .15s ease, background .2s;
 }
-.btn-cta:hover{ transform:translateY(-1px); box-shadow:0 10px 22px rgba(0,0,0,.18); }
+.btn-cta:hover{
+  transform:translateY(-1px);
+  box-shadow:0 10px 22px rgba(0,0,0,.18);
+}
 
-/* Hero */
+/* ===== Hero ===== */
 .hero{
-  position:relative; min-height:100vh;
-  display:flex; align-items:center; justify-content:center;
+  position:relative; 
+  min-height:100vh;
+  display:flex; 
+  align-items:center; 
+  justify-content:center;
   background:
     linear-gradient(180deg, rgba(10,26,47,.55) 0%, rgba(10,26,47,.65) 40%, rgba(10,26,47,.85) 100%),
     url("https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=2000&auto=format&fit=crop") center/cover no-repeat;
 }
 .hero__overlay{
-  position:absolute; inset:0;
+  position:absolute; 
+  inset:0;
   background:radial-gradient(70% 55% at 50% 40%, rgba(255,255,255,0) 0%, rgba(10,26,47,.25) 60%, rgba(10,26,47,.7) 100%);
   pointer-events:none;
 }
 .hero .container{ z-index:2 }
 
-/* Sections */
+/* ===== Sections ===== */
 .section{ padding:72px 0 }
 .section-ivory{ background:var(--ivory) }
 
-/* Cards / Tiles */
+/* ===== Cards & Lookbook ===== */
 .card-lift{
   border:0; border-radius:20px; overflow:hidden;
   background:#fff;
   box-shadow:0 10px 30px rgba(0,0,0,.06);
   transition:transform .18s ease, box-shadow .18s ease;
 }
-.card-lift:hover{ transform:translateY(-4px); box-shadow:0 16px 40px rgba(0,0,0,.10); }
+.card-lift:hover{
+  transform:translateY(-4px); 
+  box-shadow:0 16px 40px rgba(0,0,0,.10);
+}
 .card-img-top{ background-size:cover !important; background-position:center !important; }
 
 .lookbook-tile, .lookbook-wide{
-  border-radius:18px; background-size:cover; background-position:center;
+  border-radius:18px; 
+  background-size:cover; 
+  background-position:center;
   box-shadow:0 8px 24px rgba(0,0,0,.08);
 }
 
-/* Inset info boxes */
+/* ===== Utility Insets ===== */
 .healthbox{
-  background:#0f1218; color:#e9e9e9; border-radius:14px; padding:16px;
+  background:#0f1218; 
+  color:#e9e9e9; 
+  border-radius:14px; 
+  padding:16px;
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
 }
 
-/* Animations */
-@keyframes fadeUp { from {opacity:0; transform:translateY(12px)} to {opacity:1; transform:translateY(0)} }
-.fade-up{ opacity:0; transform:translateY(12px); }
-.fade-up.show{ animation:fadeUp .7s ease forwards; }
-.delay-1{ animation-delay:.12s } .delay-2{ animation-delay:.24s }
+/* ===== Intro Splash ===== */
+.intro-splash {
+  position: fixed;
+  inset: 0;
+  background: var(--navy);
+  color: var(--ivory);
+  z-index: 2000;
+  animation: splashFadeOut 2s ease 1.8s forwards;
+}
+.intro-splash h1 {
+  opacity: 0;
+  transform: scale(0.9);
+  animation: splashFadeIn 1.5s ease forwards;
+}
 
-/* Responsive */
+@keyframes splashFadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes splashFadeOut {
+  to { opacity: 0; visibility: hidden; }
+}
+
+/* ===== Fade-in sections ===== */
+.fade-section {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-section.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== Responsive ===== */
 @media (max-width: 992px){ .display-3{ font-size: 3rem } }
 @media (max-width: 576px){
   .display-3{ font-size: 2.4rem }
   .section{ padding:56px 0 }
 }
 
-/* Utility */
+/* ===== Utilities ===== */
 .bg-ink{ background:#0b0f18 }
+
+/* Brand Intro */
+#brandIntro {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2000;
+  background: none;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s ease, transform 1.6s ease;
+}
+
+#brandIntro.active {
+  opacity: 1;
+}
+
+#brandIntro.shrink {
+  transform: translate(-50%, -50%) scale(0.3) translateY(-200px);
+  opacity: 0;
+}
+
+body.content-ready .fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+}

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Cael & Selene </title>
+  <title>Cael & Selene</title>
 
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -16,8 +16,13 @@
 </head>
 <body>
 
+  <!-- Intro Splash -->
+  <div id="introSplash brandIntro" class="intro-splash d-flex align-items-center justify-content-center">
+    <h1 class="display-1 fw-bold serif">Cael & Selene</h1>
+  </div>
+
   <!-- NAVBAR -->
-  <nav id="siteNav" class="navbar navbar-expand-lg navbar-dark nav-transparent fixed-top py-3">
+  <nav id="siteNav" class="navbar navbar-expand-lg navbar-dark nav-transparent fixed-top py-3 hidden">
     <div class="container">
       <a class="navbar-brand brand" href="/">Cael & Selene</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,10 +33,9 @@
         <ul class="navbar-nav ms-auto align-items-lg-center">
           <li class="nav-item"><a class="nav-link" href="#collection">Collection</a></li>
           <li class="nav-item"><a class="nav-link" href="#lookbook">Lookbook</a></li>
-          <li class="nav-item"><a class="nav-link" href="#runway">Runway</a></li>
           <li class="nav-item"><a class="nav-link" href="#about">Maison</a></li>
           <li class="nav-item d-none d-lg-block ms-2">
-            <a class="btn btn-cta" href="#collection">Shop the Edit</a>
+            <a class="btn btn-cta" href="#collection">Shop Now</a>
           </li>
         </ul>
       </div>
@@ -41,156 +45,105 @@
   <!-- HERO -->
   <header class="hero d-flex align-items-center text-center text-white">
     <div class="hero__overlay"></div>
-    <div class="container position-relative">
-      <h1 class="display-3 fw-bold serif fade-up">Where Sky Meets Moonlight</h1>
-      <p class="lead text-light-80 mx-auto fade-up delay-1" style="max-width: 760px;">
-        A modern maison balancing masculine lines and feminine drape—crafted in deep navy, ivory, and gold.
+    <div class="container position-relative fade-section">
+      <h1 class="display-3 fw-bold serif">Where Sky Meets Moonlight</h1>
+      <p class="lead text-light-80 mx-auto" style="max-width: 760px;">
+        A maison of timeless fashion—crafted in deep navy, ivory, and gold.
       </p>
-      <div class="d-flex justify-content-center gap-3 fade-up delay-2">
-        <a href="#collection" class="btn btn-cta btn-lg px-5">View Collection</a>
-        <a href="#lookbook" class="btn btn-outline-light btn-lg px-5">See Lookbook</a>
+      <div class="d-flex justify-content-center gap-3">
+        <a href="#collection" class="btn btn-cta btn-lg px-5">Shop Collection</a>
+        <a href="#lookbook" class="btn btn-outline-light btn-lg px-5">Discover Lookbook</a>
       </div>
     </div>
   </header>
 
-  <!-- FEATURED COLLECTION (store-first teaser) -->
-  <section id="collection" class="section section-ivory">
-    <div class="container">
-      <div class="row justify-content-center text-center mb-5">
-        <div class="col-lg-8">
-          <h2 class="serif fw-bold fade-up">The Celestial Edit</h2>
-          <p class="text-muted fade-up delay-1">Tailored silhouettes, liquid satins, and quiet hardware.</p>
-        </div>
-      </div>
+  <!-- FEATURED COLLECTION -->
+  <section class="py-5 bg-light">
+  <div class="container text-center fade-up">
+    <h2 class="section-title">The Celestial Edit</h2>
+    <p class="text-muted mb-5">Timeless style for every occasion.</p>
+    <div class="row g-4">
 
-      <div class="row g-4">
-        <!-- Card 1 -->
-        <div class="col-12 col-md-6 col-lg-4 fade-up">
-          <div class="card card-lift h-100">
-            <div class="ratio ratio-4x3 card-img-top" style="background-image:url('https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?q=80&w=1500&auto=format&fit=crop');"></div>
-            <div class="card-body text-center">
-              <h5 class="card-title mb-1">Midnight Double-Breasted</h5>
-              <p class="card-text text-muted">Wool-silk blend in deep navy with gold buttons.</p>
-              <a href="#" class="stretched-link">Explore</a>
-            </div>
-          </div>
-        </div>
-        <!-- Card 2 -->
-        <div class="col-12 col-md-6 col-lg-4 fade-up delay-1">
-          <div class="card card-lift h-100">
-            <div class="ratio ratio-4x3 card-img-top" style="background-image:url('https://images.unsplash.com/photo-1556139943-4bdca53adf1e?q=80&w=1500&auto=format&fit=crop');"></div>
-            <div class="card-body text-center">
-              <h5 class="card-title mb-1">Ivory Bias Slip</h5>
-              <p class="card-text text-muted">Liquid satin cut on the bias—moonlight in motion.</p>
-              <a href="#" class="stretched-link">Explore</a>
-            </div>
-          </div>
-        </div>
-        <!-- Card 3 -->
-        <div class="col-12 col-md-6 col-lg-4 fade-up delay-2">
-          <div class="card card-lift h-100">
-            <div class="ratio ratio-4x3 card-img-top" style="background-image:url('https://images.squarespace-cdn.com/content/v1/5e616162a83c93763c8551d4/1684247369644-AEFZ91CDHJPG9QL5RXGA/Trench+Duster+Reversible+Flat+Small-01.png');"></div>
-            <div class="card-body text-center">
-              <h5 class="card-title mb-1">Gilded Trench</h5>
-              <p class="card-text text-muted">Storm flap, tailored collar, subtle gilt hardware.</p>
-              <a href="#" class="stretched-link">Explore</a>
-            </div>
+      <!-- For Him -->
+      <div class="col-md-4 fade-up">
+        <div class="card luxury-card h-100">
+          <img src="https://images.pexels.com/photos/428364/pexels-photo-428364.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=600"
+               class="card-img-top" alt="For Him">
+          <div class="card-body">
+            <h5 class="card-title">For Him</h5>
+            <p class="card-text">Sharp tailoring, statement watches, and timeless footwear for the modern man.</p>
+            <a href="#" class="btn btn-outline-dark">Shop Now</a>
           </div>
         </div>
       </div>
 
-      <!-- CTA strip -->
-      <div class="row align-items-center mt-5 py-4 px-4 bg-ink rounded-4 text-white fade-up">
-        <div class="col-lg-8">
-          <h3 class="serif mb-1">Private Access</h3>
-          <p class="mb-0 text-light-80">Join the list for early releases & salon appointments.</p>
-        </div>
-        <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
-          <a class="btn btn-cta btn-lg px-4" href="#">Request Invite</a>
+      <!-- For Her -->
+      <div class="col-md-4 fade-up">
+        <div class="card luxury-card h-100">
+          <img src="https://th.bing.com/th/id/OIP.76ztVzzVIIOU4ys6ZPnXxAHaEK?w=202&h=113&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+               class="card-img-top" alt="For Her">
+          <div class="card-body">
+            <h5 class="card-title">For Her</h5>
+            <p class="card-text">Elegant gowns, couture handbags, and luxury heels designed for sophistication.</p>
+            <a href="#" class="btn btn-outline-dark">Shop Now</a>
+          </div>
         </div>
       </div>
+
+      <!-- Accessories -->
+      <div class="col-md-4 fade-up">
+        <div class="card luxury-card h-100">
+          <img src="https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+               class="card-img-top" alt="Accessories">
+          <div class="card-body">
+            <h5 class="card-title">Accessories</h5>
+            <p class="card-text">Luxury watches, jewelry, and essentials that elevate every look.</p>
+            <a href="#" class="btn btn-outline-dark">Explore</a>
+          </div>
+        </div>
+      </div>
+
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- LOOKBOOK (brand-story-first) -->
+
+  <!-- LOOKBOOK -->
   <section id="lookbook" class="section">
     <div class="container">
       <div class="row justify-content-center text-center mb-5">
         <div class="col-lg-8">
-          <h2 class="serif fw-bold fade-up">Lookbook — Night & Ivory</h2>
-          <p class="text-muted fade-up delay-1">Editorial moments from the Cael & Selene studio.</p>
+          <h2 class="serif fw-bold">Lookbook — Night & Ivory</h2>
+          <p class="text-muted">Editorial moments from Cael & Selene studio.</p>
         </div>
       </div>
 
       <div class="row g-4">
-        <div class="col-12 col-md-6 col-lg-4 fade-up">
-          <div class="lookbook-tile ratio ratio-4x5" style="background-image:url('https://images.unsplash.com/photo-1520975922071-a89f7a1d3f5b?q=80&w=1600&auto=format&fit=crop');"></div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="lookbook-tile ratio ratio-4x5" style="background-image:url('data:image/webp;base64,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');"></div>
         </div>
-        <div class="col-12 col-md-6 col-lg-4 fade-up delay-1">
-          <div class="lookbook-tile ratio ratio-4x5" style="background-image:url('https://image-cdn.hypb.st/https://hypebeast.com/image/2019/01/curly-fall-winter-2019-lookbook-collection-tw.jpg?w=1080&cbr=1&q=90&fit=max');"></div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="lookbook-tile ratio ratio-4x5" style="background-image:url('https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=1600&auto=format&fit=crop');"></div>
         </div>
-        <div class="col-12 col-md-6 col-lg-4 fade-up delay-2">
-          <div class="lookbook-tile ratio ratio-4x5" style="background-image:url('https://images.unsplash.com/photo-1602524207336-029a9bcb43d2?q=80&w=1600&auto=format&fit=crop');"></div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-6 fade-up">
-          <div class="lookbook-wide ratio ratio-21x9" style="background-image:url('https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=1800&auto=format&fit=crop');"></div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-6 fade-up delay-1">
-          <div class="lookbook-wide ratio ratio-21x9" style="background-image:url('https://images.unsplash.com/photo-1520974802209-99fcea6ba4b1?q=80&w=1800&auto=format&fit=crop');"></div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="lookbook-tile ratio ratio-4x5" style="background-image:url('https://images.unsplash.com/photo-1520974802209-99fcea6ba4b1?q=80&w=1600&auto=format&fit=crop');"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- RUNWAY (featured video) -->
-  <section id="runway" class="section section-ivory">
-    <div class="container">
-      <div class="row justify-content-center text-center mb-5">
-        <div class="col-lg-8">
-          <h2 class="serif fw-bold fade-up">Runway — AW25 Presentation</h2>
-          <p class="text-muted fade-up delay-1">Captured under navy skies with a touch of gold.</p>
-        </div>
-      </div>
-
-      <div class="ratio ratio-16x9 fade-up">
-        <!-- Replace src with your own video; this placeholder is fashion/editorial-adjacent -->
-        <iframe
-          src="https://www.youtube.com/embed/tAGnKpE4NCI?rel=0&modestbranding=1&playsinline=1"
-          title="Runway Film"
-          allowfullscreen
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
-        </iframe>
-      </div>
-    </div>
-  </section>
-
-  <!-- MAISON / ABOUT -->
-  <section id="about" class="section">
+  <!-- MAISON -->
+  <section id="about" class="section section-ivory">
     <div class="container">
       <div class="row justify-content-center text-center mb-4">
         <div class="col-lg-8">
-          <h2 class="serif fw-bold fade-up">The Maison</h2>
-          <p class="text-muted fade-up delay-1">
+          <h2 class="serif fw-bold">The Maison</h2>
+          <p class="text-muted">
             Founded by two designers in dialogue—structure and softness. We craft pieces to live with:
             tailored, intentional, quietly luminous.
           </p>
         </div>
       </div> 
-
-      <div class="row g-4 fade-up">
-        <div class="col-md-6">
-          <div class="healthbox">
-            <strong>Ethos</strong><br/>
-            Natural fibres, responsible mills, small-batch production.
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="healthbox">
-            <strong>Salon</strong><br/>
-            By appointment in select cities. Private fittings & bespoke orders.
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
