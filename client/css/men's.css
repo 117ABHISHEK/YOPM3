@@ -1,0 +1,60 @@
+/* Men's Collection Custom Styles */
+
+.filter-btn.active,
+.filter-btn:focus {
+  background: var(--gold);
+  color: #0b0f18;
+  border-color: #b9932a;
+}
+
+.product-card {
+  display: block;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.product-card.hide {
+  display: none !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.luxury-card {
+  border: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,.06);
+  transition: transform .18s, box-shadow .18s;
+}
+.luxury-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,.10);
+}
+.card-img-top {
+  background-size: cover !important;
+  background-position: center !important;
+  height: 320px;
+  object-fit: cover;
+}
+
+@media (max-width: 576px) {
+  .card-img-top { height: 200px; }
+}
+
+/* Filter buttons more elegant */
+.filter-btn {
+  border-radius: 50px;
+  padding: 8px 20px;
+  font-weight: 500;
+  transition: all .3s ease;
+}
+
+.filter-btn.active {
+  background: var(--gold);
+  color: #0b0f18;
+  border-color: var(--gold);
+}
+
+.luxury-card .card-body {
+  padding: 1.5rem;
+}

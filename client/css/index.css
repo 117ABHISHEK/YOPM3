@@ -211,3 +211,27 @@ body.content-ready .fade-up {
   opacity: 0;
   transform: translateY(30px);
 }
+
+
+/* Luxury Card Hover Effect */
+.luxury-card {
+  border: none;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.luxury-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+}
+
+.luxury-card img {
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.luxury-card:hover img {
+  transform: scale(1.08);
+  opacity: 0.9;
+}

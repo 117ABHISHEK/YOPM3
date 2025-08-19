@@ -39,6 +39,7 @@
 (function(){
   const els = document.querySelectorAll('.fade-up');
 
+
   function revealNow() {
     els.forEach(el => el.classList.add('show'));
   }
@@ -59,10 +60,13 @@
 
   // Delay fade-up until intro finished
   window.addEventListener('load', () => {
+    // If there's an intro, wait for it to finish. Otherwise, start right away.
+    const delay = intro ? 3000 : 0;
+
     setTimeout(() => {
       if (document.body.classList.contains('content-ready')) {
         els.forEach(el => io.observe(el));
       }
-    }, 3000); // after intro animation
+    }, delay);
   });
 })();
