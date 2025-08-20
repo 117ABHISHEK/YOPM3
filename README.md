@@ -1,3 +1,3 @@
 # YOPM3
 
-work in progress
+work is in progress
