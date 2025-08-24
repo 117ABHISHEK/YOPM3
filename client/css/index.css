@@ -86,7 +86,9 @@ body{
 }
 .btn-cta:hover{
   transform:translateY(-1px);
-  box-shadow:0 10px 22px rgba(0,0,0,.18);
+  box-shadow:0 10px 22px rgba(250, 250, 250, 0.18);
+  color:#0a1a2f;
+  background-color: var(--ivory);
 }
 
 /* ===== Hero ===== */
