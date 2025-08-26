@@ -24,3 +24,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   filterButtons.forEach(button => button.addEventListener('click', handleFilter));
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const grid = document.getElementById("productsGrid");
+    const items = Array.from(grid.children);
+
+    // Fisher-Yates shuffle
+    for (let i = items.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      grid.appendChild(items[j]); // re-append shuffled element
+      items.splice(j, 1); // remove from pool
+    }
+  });
