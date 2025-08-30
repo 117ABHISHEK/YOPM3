@@ -70,3 +70,30 @@
     }, delay);
   });
 })();
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const productModal = document.getElementById('productModal');
+
+  productModal.addEventListener('show.bs.modal', (event) => {
+    // Get the button that triggered the modal
+    const button = event.relatedTarget;
+    // Find the parent card element
+    const card = button.closest('.product-card');
+
+    // Get the product details from the card
+    const imageSrc = card.querySelector('.card-img-top').src;
+    const title = card.querySelector('.card-title').textContent;
+    const description = card.querySelector('.card-text').textContent;
+
+    // Get the modal's elements
+    const modalImage = productModal.querySelector('#modal-product-image');
+    const modalTitle = productModal.querySelector('#modal-product-title');
+    const modalDescription = productModal.querySelector('#modal-product-description');
+
+    // Populate the modal with the new content
+    modalImage.src = imageSrc;
+    modalTitle.textContent = title;
+    modalDescription.textContent = description;
+  });
+});
