@@ -1,3 +1,102 @@
+// Place this inside your main DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', () => {
+    // ... your existing code ...
+
+    // --- Order History Modal Logic ---
+    const orderHistoryBtn = document.getElementById('order-history-btn');
+    const orderModal = document.getElementById('order-history-modal');
+    const closeButton = orderModal.querySelector('.close-button');
+    const orderHistoryContainer = document.getElementById('order-history-container');
+
+    // This is an example of how you might show the button after login
+    // You should integrate this with your existing login success logic
+    if (localStorage.getItem('token')) {
+        orderHistoryBtn.style.display = 'inline';
+    }
+
+    // Function to open the modal and fetch orders
+    const showOrderHistory = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('You must be logged in to view your order history.');
+            return;
+        }
+
+        // Show modal with loading state
+        orderHistoryContainer.innerHTML = '<p>Loading...</p>';
+        orderModal.style.display = 'block';
+
+        try {
+            const response = await fetch('/api/orders', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to fetch orders.');
+            }
+
+            const orders = await response.json();
+            displayOrders(orders);
+
+        } catch (error) {
+            console.error('Error fetching order history:', error);
+            orderHistoryContainer.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+        }
+    };
+
+    // Function to format and display orders in the modal
+    const displayOrders = (orders) => {
+        if (orders.length === 0) {
+            orderHistoryContainer.innerHTML = '<p>You have no past orders.</p>';
+            return;
+        }
+
+        const ordersHtml = orders.map(order => `
+            <div class="order-item">
+                <h3>Order ID: ${order._id}</h3>
+                <p><strong>Date:</strong> ${new Date(order.createdAt).toLocaleDateString()}</p>
+                <p><strong>Total:</strong> $${order.total.toFixed(2)}</p>
+                <p><strong>Status:</strong> ${order.status}</p>
+                <h4>Items:</h4>
+                <ul>
+                    ${order.orderItems.map(item => `
+                        <li>${item.quantity} x ${item.name} (Size: ${item.size || 'N/A'}) - $${item.price.toFixed(2)} each</li>
+                    `).join('')}
+                </ul>
+                <h4>Shipping To:</h4>
+                <p>${order.shippingInfo.fullName}, ${order.shippingInfo.address}, ${order.shippingInfo.city}</p>
+            </div>
+        `).join('');
+
+        orderHistoryContainer.innerHTML = ordersHtml;
+    };
+
+    // --- Event Listeners for Modal ---
+    if (orderHistoryBtn) {
+        orderHistoryBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showOrderHistory();
+        });
+    }
+
+    if (closeButton) {
+        closeButton.addEventListener('click', () => {
+            orderModal.style.display = 'none';
+        });
+    }
+
+    // Close modal if user clicks on the background overlay
+    window.addEventListener('click', (event) => {
+        if (event.target == orderModal) {
+            orderModal.style.display = 'none';
+        }
+    });
+});
 // Navbar: make solid after scroll
 (function(){
   const nav = document.getElementById('siteNav');
