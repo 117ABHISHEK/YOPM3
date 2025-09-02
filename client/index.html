@@ -19,8 +19,8 @@
 
     <!-- App styles -->
     <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/auth.css" />
   </head>
-
   <body>
     <!-- Intro Splash -->
     <div
@@ -61,7 +61,7 @@
               <a class="nav-link" href="#about">Maison</a>
             </li>
             <li class="nav-item d-none d-lg-block ms-2">
-              <a class="btn btn-cta" href="#collection">Shop Now</a>
+              <a class="btn btn-cta" href="#" data-bs-toggle="modal" data-bs-target="#authModal">Shop Now</a>
             </li>
           </ul>
         </div>
@@ -205,9 +205,134 @@
       </div>
     </footer>
 
-    
+    <!-- Auth Modal -->
+    <div class="modal fade auth-modal" id="authModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <!-- Login Form -->
+          <div id="loginForm">
+            <div class="modal-header">
+              <h5 class="modal-title">Welcome Back</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+              <form>
+                <div class="mb-3">
+                  <label class="form-label">Email</label>
+                  <input type="email" class="form-control" id="loginEmail" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Password</label>
+                  <input type="password" class="form-control" id="loginPassword" required>
+                </div>
+                <div class="d-grid">
+                  <button type="button" class="btn btn-dark" id="loginBtn">Login</button>
+                </div>
+                <p class="text-center mt-3">
+                  New to Cael & Selene? 
+                  <span class="auth-switch" onclick="toggleAuthForm('signup')">Sign up</span>
+                </p>
+              </form>
+            </div>
+          </div>
+
+          <!-- Signup Form -->
+          <div id="signupForm" style="display: none;">
+            <div class="modal-header">
+              <h5 class="modal-title">Create Account</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+              <form>
+                <div class="mb-3">
+                  <label class="form-label">Full Name</label>
+                  <input type="text" class="form-control" id="signupName" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Email</label>
+                  <input type="email" class="form-control" id="signupEmail" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Password</label>
+                  <input type="password" class="form-control" id="signupPassword" required>
+                </div>
+                <div class="d-grid">
+                  <button type="button" class="btn btn-dark" id="signupBtn">Create Account</button>
+                </div>
+                <p class="text-center mt-3">
+                  Already have an account? 
+                  <span class="auth-switch" onclick="toggleAuthForm('login')">Login</span>
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+      function toggleAuthForm(type) {
+        document.getElementById('loginForm').style.display = type === 'login' ? 'block' : 'none';
+        document.getElementById('signupForm').style.display = type === 'signup' ? 'block' : 'none';
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        // Handle signup
+        document.getElementById('signupBtn').addEventListener('click', async function() {
+          const name = document.getElementById('signupName').value;
+          const email = document.getElementById('signupEmail').value;
+          const password = document.getElementById('signupPassword').value;
+
+          try {
+            const response = await fetch('http://localhost:3000/api/register', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ name, email, password })
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+              alert('Account created successfully!');
+              toggleAuthForm('login');
+            } else {
+              alert(data.message || 'Failed to create account');
+            }
+          } catch (error) {
+            console.error('Signup error:', error);
+            alert('Failed to create account');
+          }
+        });
+
+        // Handle login
+        document.getElementById('loginBtn').addEventListener('click', async function() {
+          const email = document.getElementById('loginEmail').value;
+          const password = document.getElementById('loginPassword').value;
+
+          try {
+            const response = await fetch('http://localhost:3000/api/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email, password })
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+              localStorage.setItem('token', data.token);
+              localStorage.setItem('userId', data.userId);
+              window.location.href = '/collection.html';
+            } else {
+              alert(data.message || 'Login failed');
+            }
+          } catch (error) {
+            console.error('Login error:', error);
+            alert('Login failed');
+          }
+        });
+      });
+    </script>
   </body>
 </html>

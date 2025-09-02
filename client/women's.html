@@ -313,7 +313,7 @@
                 <input type="number" class="form-control" id="productQuantity" value="1" min="1">
               </div>
               <div class="d-grid mt-auto">
-                <button class="btn btn-dark btn-lg">Add to Cart</button>
+                <button class="btn btn-dark btn-lg" data-bs-toggle="modal" data-bs-target="#deliveryInfoModal">Add to Cart</button>
               </div>
             </div>
           </div>
@@ -328,7 +328,60 @@
       </div>
     </div>
   </div>
-  </div>
+
+  <!-- Delivery Information Modal -->
+  <div class="modal fade" id="deliveryInfoModal" tabindex="-1" aria-labelledby="deliveryInfoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="border-radius: 0; border: 1px solid #333;">
+        <div class="modal-header" style="border-bottom: 1px solid #333;">
+          <h5 class="modal-title" id="deliveryInfoModalLabel" style="font-family: 'Serif', 'Georgia'; font-weight: 600;">Shipping Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="background-color: #fdfdfd; padding: 2rem;">
+          <p class="text-muted mb-4">Where should we send your selection?</p>
+          <form id="delivery-form">
+            <div class="mb-3">
+              <label for="fullName" class="form-label">Full Name</label>
+              <input type="text" class="form-control" id="fullName" placeholder="John M. Doe" required>
+            </div>
+            <div class="mb-3">
+              <label for="address" class="form-label">Street Address</label>
+              <input type="text" class="form-control" id="address" placeholder="1234 Luxury Lane" required>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="city" class="form-label">City</label>
+                <input type="text" class="form-control" id="city" placeholder="Beverly Hills" required>
+              </div>
+              <div class="col-md-3 mb-3">
+                <label for="state" class="form-label">State</label>
+                <input type="text" class="form-control" id="state" placeholder="CA" required>
+              </div>
+              <div class="col-md-3 mb-3">
+                <label for="zip" class="form-label">ZIP</label>
+                <input type="text" class="form-control" id="zip" placeholder="90210" required>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Phone Number</label>
+              <input type="tel" class="form-control" id="phone" placeholder="For delivery updates" required>
+            </div>
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" id="isGiftCheck">
+              <label class="form-check-label" for="isGiftCheck">This is a gift</label>
+            </div>
+            <div class="mb-3" id="giftMessageContainer" style="display: none;">
+              <label for="giftMessage" class="form-label">Gift Message</label>
+              <textarea class="form-control" id="giftMessage" rows="3" placeholder="Add a personal note..."></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer" style="border-top: 1px solid #333; padding: 1rem;">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" id="confirm-delivery-btn" class="btn btn-dark">Confirm & Add to Cart</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- FOOTER -->
@@ -348,6 +401,68 @@
   <script src="js/main.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/filter.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const isGiftCheck = document.getElementById('isGiftCheck');
+        const giftMessageContainer = document.getElementById('giftMessageContainer');
+        const deliveryForm = document.getElementById('delivery-form');
+        const confirmDeliveryBtn = document.getElementById('confirm-delivery-btn');
+
+        // Toggle gift message
+        isGiftCheck.addEventListener('change', function() {
+            giftMessageContainer.style.display = this.checked ? 'block' : 'none';
+        });
+
+        // Handle form submission
+        confirmDeliveryBtn.addEventListener('click', async function() {
+            if (deliveryForm.checkValidity()) {
+                const shippingInfo = {
+                    fullName: document.getElementById('fullName').value,
+                    address: document.getElementById('address').value,
+                    city: document.getElementById('city').value,
+                    state: document.getElementById('state').value,
+                    zip: document.getElementById('zip').value,
+                    phone: document.getElementById('phone').value,
+                    isGift: document.getElementById('isGiftCheck').checked,
+                    giftMessage: document.getElementById('giftMessage').value
+                };
+
+                // Get product details from the product modal
+                const productDetails = {
+                    name: document.getElementById('modal-product-title').textContent,
+                    price: parseFloat(document.querySelector('.fs-4').textContent.replace('$', '')),
+                    quantity: parseInt(document.getElementById('productQuantity').value),
+                    size: document.getElementById('productSize').value
+                };
+
+                // Add item to cart
+                cart.addItem(productDetails);
+
+                // Attempt checkout
+                const result = await cart.checkout(shippingInfo);
+                
+                if (result.success) {
+                    // Close both modals
+                    const productModal = bootstrap.Modal.getInstance(document.getElementById('productModal'));
+                    const deliveryModal = bootstrap.Modal.getInstance(document.getElementById('deliveryInfoModal'));
+                    productModal.hide();
+                    deliveryModal.hide();
+
+                    // Show success message
+                    alert(`Order placed successfully! Order ID: ${result.orderId}`);
+                    
+                    // Reset form
+                    deliveryForm.reset();
+                } else {
+                    alert('Failed to place order. Please try again.');
+                }
+            } else {
+                deliveryForm.reportValidity();
+            }
+        });
+    });
+  </script>
 </body>
 
 </html>

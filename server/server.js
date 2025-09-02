@@ -15,7 +15,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
 app.use(bodyParser.json());
 
 // --- Database Connection (Mongoose) ---
@@ -83,22 +86,71 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
+// Add middleware to verify JWT token
+const verifyToken = (req, res, next) => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+        return res.status(401).json({ message: "No token provided" });
+    }
+
+    const token = authHeader.split(' ')[1];
+    try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+        req.user = decoded;
+        next();
+    } catch (error) {
+        return res.status(401).json({ message: "Invalid token" });
+    }
+};
+
 // Checkout
-app.post("/api/checkout", async (req, res) => {
-  const { orderItems, shippingInfo, paymentInfo, userEmail, userId } = req.body;
+app.post("/api/checkout", verifyToken, async (req, res) => {
+  console.log('Received checkout request:', req.body); // Debug logging
+  
+  const { orderItems, shippingInfo, userId } = req.body;
+  
   try {
+    if (!orderItems || !shippingInfo) {
+      throw new Error('Missing required checkout information');
+    }
+
     const newOrder = new Order({
-      userId: userId || null,
-      email: userEmail,
-      orderItems,
-      shippingInfo,
-      paymentInfo
+      userId: userId,
+      email: req.user.email,
+      orderItems: orderItems.map(item => ({
+        name: item.name,
+        price: parseFloat(item.price),
+        quantity: parseInt(item.quantity),
+        size: item.size
+      })),
+      shippingInfo: {
+        fullName: shippingInfo.fullName,
+        address: shippingInfo.address,
+        city: shippingInfo.city,
+        state: shippingInfo.state,
+        zip: shippingInfo.zip,
+        phone: shippingInfo.phone,
+        isGift: shippingInfo.isGift,
+        giftMessage: shippingInfo.giftMessage
+      }
     });
-    await newOrder.save();
-    res.status(201).json({ message: "Order placed successfully!", orderId: newOrder._id });
+
+    console.log('Saving order:', newOrder); // Debug logging
+    
+    const savedOrder = await newOrder.save();
+    console.log('Order saved:', savedOrder); // Debug logging
+
+    res.status(201).json({
+      success: true,
+      message: "Order placed successfully!",
+      orderId: savedOrder._id
+    });
   } catch (error) {
     console.error("Checkout error:", error);
-    res.status(500).json({ message: "Failed to place order." });
+    res.status(500).json({
+      success: false,
+      message: error.message || "Failed to place order."
+    });
   }
 });
 

@@ -1,0 +1,28 @@
+.auth-modal .modal-content {
+    border-radius: 0;
+    border: 1px solid #333;
+}
+
+.auth-modal .modal-header {
+    border-bottom: 1px solid #333;
+}
+
+.auth-modal .form-control {
+    border-radius: 0;
+    padding: 0.75rem 1rem;
+}
+
+.auth-modal .btn {
+    border-radius: 0;
+    padding: 0.75rem 1.5rem;
+}
+
+.auth-switch {
+    color: #666;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.auth-switch:hover {
+    color: #333;
+}
