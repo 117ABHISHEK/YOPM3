@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import Order from './models/Order.js';
 
 // Setup __dirname in ES module
 const __filename = fileURLToPath(import.meta.url);
@@ -34,17 +35,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
 });
 
-const orderSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: false },
-  email: { type: String, required: true },
-  orderItems: { type: [Object], required: true },
-  shippingInfo: { type: Object, required: true },
-  paymentInfo: { type: Object, required: false },
-  createdAt: { type: Date, default: Date.now }
-});
-
 const User = mongoose.model("User", userSchema);
-const Order = mongoose.model("Order", orderSchema);
 
 // --- JWT Secret ---
 const JWT_SECRET = process.env.JWT_SECRET || "your_strong_jwt_secret_key"; // IMPORTANT: Use a strong, random key in production
@@ -105,17 +96,22 @@ const verifyToken = (req, res, next) => {
 
 // Checkout
 app.post("/api/checkout", verifyToken, async (req, res) => {
-  console.log('Received checkout request:', req.body); // Debug logging
+  console.log('Received checkout request:', req.body);
   
-  const { orderItems, shippingInfo, userId } = req.body;
+  const { orderItems, shippingInfo } = req.body;
   
   try {
     if (!orderItems || !shippingInfo) {
       throw new Error('Missing required checkout information');
     }
 
+    // Calculate order total
+    const total = orderItems.reduce((sum, item) => 
+      sum + (parseFloat(item.price) * parseInt(item.quantity)), 0
+    );
+
     const newOrder = new Order({
-      userId: userId,
+      userId: req.user.userId,
       email: req.user.email,
       orderItems: orderItems.map(item => ({
         name: item.name,
@@ -132,18 +128,21 @@ app.post("/api/checkout", verifyToken, async (req, res) => {
         phone: shippingInfo.phone,
         isGift: shippingInfo.isGift,
         giftMessage: shippingInfo.giftMessage
-      }
+      },
+      total: total,
+      status: 'confirmed'
     });
 
-    console.log('Saving order:', newOrder); // Debug logging
+    console.log('Attempting to save order:', newOrder);
     
     const savedOrder = await newOrder.save();
-    console.log('Order saved:', savedOrder); // Debug logging
+    console.log('Order saved successfully:', savedOrder);
 
     res.status(201).json({
       success: true,
       message: "Order placed successfully!",
-      orderId: savedOrder._id
+      orderId: savedOrder._id,
+      total: savedOrder.total
     });
   } catch (error) {
     console.error("Checkout error:", error);
@@ -154,12 +153,35 @@ app.post("/api/checkout", verifyToken, async (req, res) => {
   }
 });
 
+// Add this new endpoint for fetching order history
+app.get("/api/orders", verifyToken, async (req, res) => {
+    try {
+        const orders = await Order.find({ userId: req.user.userId })
+            .sort({ createdAt: -1 }); // Most recent first
+        
+        res.json(orders);
+    } catch (error) {
+        console.error("Error fetching orders:", error);
+        res.status(500).json({ message: "Failed to fetch orders" });
+    }
+});
+
 // Health check first
 app.get("/api/health", (req, res) => {
   res.json({ ok: true });
 });
 
 // Serve static files
+app.use(express.static(path.join(__dirname, "../client")));
+
+// Catch-all for frontend routes (avoids API paths)
+app.get(/^(?!\/api).*/, (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/luxury_clothing_website.html"));
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});
 app.use(express.static(path.join(__dirname, "../client")));
 
 // Catch-all for frontend routes (avoids API paths)

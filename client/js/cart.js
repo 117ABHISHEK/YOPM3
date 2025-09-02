@@ -202,6 +202,9 @@ class Cart {
             this.cartTotalEl = document.getElementById('cart-total');
             this.cartItemCount = document.getElementById('cart-item-count');
             
+            // Load saved cart items
+            this.loadCartFromStorage();
+            
             // Update shop now buttons
             document.querySelectorAll('.shop-now-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => this.handleShopNowClick(e));
@@ -209,21 +212,40 @@ class Cart {
         });
     }
 
+    loadCartFromStorage() {
+        const storedCart = localStorage.getItem('cartItems');
+        if (storedCart) {
+            this.items = JSON.parse(storedCart);
+            this.updateCartDisplay();
+        }
+    }
+
+    saveCartToStorage() {
+        localStorage.setItem('cartItems', JSON.stringify(this.items));
+    }
+
     addItem(item) {
         this.items.push(item);
-        console.log('Item added to cart:', item); // Debug logging
+        this.saveCartToStorage();
+        console.log('Item added to cart:', item);
     }
 
     clear() {
         this.items = [];
-        console.log('Cart cleared'); // Debug logging
+        this.saveCartToStorage();
+        console.log('Cart cleared');
+    }
+
+    updateCartDisplay() {
+        // Update cart icon count
+        if (this.cartItemCount) {
+            const totalItems = this.items.reduce((sum, item) => sum + item.quantity, 0);
+            this.cartItemCount.textContent = totalItems;
+            this.cartItemCount.style.display = totalItems > 0 ? 'inline-block' : 'none';
+        }
     }
 
     async checkout(shippingInfo) {
-        if (!auth.isLoggedIn()) {
-            return { success: false, requiresLogin: true };
-        }
-
         try {
             const response = await fetch('http://localhost:3000/api/checkout', {
                 method: 'POST',
@@ -233,21 +255,21 @@ class Cart {
                 },
                 body: JSON.stringify({
                     orderItems: this.items,
-                    shippingInfo,
-                    userId: auth.userId
+                    shippingInfo
                 })
             });
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
             const data = await response.json();
-            console.log('Checkout response:', data);
-            
             if (data.success) {
+                // Close all modals first
+                const productModal = bootstrap.Modal.getInstance(document.getElementById('productModal'));
+                const deliveryModal = bootstrap.Modal.getInstance(document.getElementById('deliveryInfoModal'));
+                if (productModal) productModal.hide();
+                if (deliveryModal) deliveryModal.hide();
+                
                 this.clear();
-                return { success: true, orderId: data.orderId };
+                this.showSuccessPopup(data.total);
+                return { success: true };
             } else {
                 throw new Error(data.message);
             }
@@ -255,6 +277,22 @@ class Cart {
             console.error('Checkout error:', error);
             return { success: false, error: error.message };
         }
+    }
+
+    showSuccessPopup(total) {
+        const popupHTML = `
+            <div class="success-backdrop"></div>
+            <div class="success-popup">
+                <i class="fas fa-check-circle success-icon"></i>
+                <h3>Order Placed Successfully!</h3>
+                <p>Thank you for shopping with us.</p>
+                <p class="total">Total: $${total.toFixed(2)}</p>
+                <button class="btn btn-dark" onclick="document.querySelector('.success-popup').remove(); document.querySelector('.success-backdrop').remove();">
+                    Continue Shopping
+                </button>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', popupHTML);
     }
 
     handleShopNowClick(event) {

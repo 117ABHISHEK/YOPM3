@@ -20,6 +20,10 @@
     <!-- App styles -->
     <link rel="stylesheet" href="css/index.css" />
     <link rel="stylesheet" href="css/auth.css" />
+    <link rel="stylesheet" href="css/success-popup.css" />
+
+    <!-- Add FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   </head>
   <body>
     <!-- Intro Splash -->
@@ -313,25 +317,22 @@
           const password = document.getElementById('loginPassword').value;
 
           try {
-            const response = await fetch('http://localhost:3000/api/login', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ email, password })
-            });
-
-            const data = await response.json();
-            if (response.ok) {
-              localStorage.setItem('token', data.token);
-              localStorage.setItem('userId', data.userId);
-              window.location.href = '/collection.html';
+            const result = await auth.login(email, password);
+            if (result.success) {
+              const authModal = bootstrap.Modal.getInstance(document.getElementById('authModal'));
+              authModal.hide();
             } else {
-              alert(data.message || 'Login failed');
+              alert(result.message || 'Login failed');
             }
           } catch (error) {
             console.error('Login error:', error);
             alert('Login failed');
           }
         });
+      });
+    </script>
+  </body>
+</html>
       });
     </script>
   </body>
