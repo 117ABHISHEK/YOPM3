@@ -238,12 +238,12 @@ body{
 }
 
 /* ===== Fade-in sections ===== */
-.fade-section {
+.fade-section.show {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
-.fade-section.show {
+.fade-section{
   opacity: 1;
   transform: translateY(0);
 }

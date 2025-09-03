@@ -21,7 +21,7 @@ class Auth {
             shopNowBtn.parentElement.innerHTML = `
                 <div class="dropdown">
                     <button class="btn btn-cta dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        <i class="fas fa-user"></i> ${this.userName || 'Account'}
+                        <i class="fas fa-user"></i> ${'Account'}
                     </button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="orders.html">Order History</a></li>
