@@ -196,3 +196,18 @@ document.addEventListener('DOMContentLoaded', () => {
     modalDescription.textContent = description;
   });
 });
+
+// Lookbook Modal Trigger
+document.querySelectorAll('.lookbook-tile').forEach(tile => {
+  tile.addEventListener('click', () => {
+    const img = tile.getAttribute("data-img");
+    const title = tile.getAttribute("data-title");
+    const desc = tile.getAttribute("data-desc");
+
+    document.getElementById("lookbookImg").src = img;
+    document.getElementById("lookbookTitle").textContent = title;
+    document.getElementById("lookbookDesc").textContent = desc;
+
+    new bootstrap.Modal(document.getElementById("lookbookModal")).show();
+  });
+});

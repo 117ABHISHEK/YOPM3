@@ -23,7 +23,7 @@ app.use(cors({
 app.use(bodyParser.json());
 
 // --- Database Connection (Mongoose) ---
-const MONGO_URI = "mongodb://localhost:27017/luxury-brand-db"; // IMPORTANT: Replace with your MongoDB connection string
+const MONGO_URI = "mongodb://localhost:27017/Cael&Selene"; // IMPORTANT: Replace with your MongoDB connection string
 mongoose.connect(MONGO_URI)
   .then(() => console.log("Connected to MongoDB successfully!"))
   .catch(err => console.error("Could not connect to MongoDB:", err));

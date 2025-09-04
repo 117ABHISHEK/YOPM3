@@ -308,3 +308,19 @@ body.content-ready .fade-up {
   transform: scale(1.08);
   opacity: 0.9;
 }
+
+/* Lookbook Hover Luxury Effect */
+.lookbook-tile {
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+  transition: all 0.6s ease;
+  cursor: pointer;
+  min-height: 350px; /* ensures visibility */
+}
+
+.lookbook-tile:hover {
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  filter: brightness(1.1);
+}
