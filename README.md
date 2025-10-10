@@ -1,10 +1,10 @@
-# 💎 YOPM3 — Cael & Selene | Luxury Fashion E-Commerce Website  
+# 🤍 YOPM3 — Cael & Selene | Luxury Fashion E-Commerce Website  
 ### *Year of Projects: Month 3 by @117ABHISHEK & @ShitalPanhalkar1015*
 
-![YOPM3](https://img.shields.io/badge/Project-YOPM3-blueviolet?style=for-the-badge)
+![YOPM3](https://img.shields.io/badge/Project-YOPM3-silver?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Completed-success?style=for-the-badge)
-![Stack](https://img.shields.io/badge/Stack-MERN%20%7C%20Luxury%20Brand-orange?style=for-the-badge)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![Stack](https://img.shields.io/badge/Stack-MERN%20%7C%20Luxury%20Brand-ivory?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-lightgrey?style=for-the-badge)
 
 > ✨ **Cael & Selene** — a fictional **luxury fashion brand** crafted for the *Year of Projects: Month 3 (YOPM3)* challenge.  
 > The project re-imagines what a premium online shopping experience feels like — sleek design, interactive animations, secure authentication, and an end-to-end order system.
